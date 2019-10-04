@@ -1,0 +1,3 @@
+[submodule "lib/fifo_map"]
+	path = lib/fifo_map
+	url = https://github.com/nlohmann/fifo_map.git

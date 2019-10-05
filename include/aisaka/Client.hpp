@@ -23,7 +23,7 @@ class Client {
 
 	void message_create(aegis::gateway::events::message_create obj);
 
-   private:
+   protected:
 	aegis::core* bot;
 	mongocxx::pool* mongo_pool;
 

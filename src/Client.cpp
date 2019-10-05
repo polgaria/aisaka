@@ -9,6 +9,11 @@
 #include <bsoncxx/json.hpp>
 #include <mongocxx/client.hpp>
 
+Aisaka::Client::Client(const std::string& default_prefix,
+					   const std::string& bot_name, const int64_t& owner_id)
+	: default_prefix(default_prefix), bot_name(bot_name), owner_id(owner_id) {}
+Aisaka::Client::~Client() = default;
+
 void Aisaka::Client::message_create(
 	aegis::gateway::events::message_create obj) {
 	using bsoncxx::builder::stream::document;

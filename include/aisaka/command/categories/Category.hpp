@@ -10,6 +10,7 @@ class Category {
    public:
 	Category(std::string name);
 	virtual ~Category();
+
 	virtual void init(spdlog::logger&, Aisaka::Commands&) {}
 	const std::string& get_name() const noexcept { return name; }
 

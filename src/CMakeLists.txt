@@ -21,14 +21,15 @@ add_library(aisaka
 )
 
 target_include_directories(aisaka PUBLIC
-	../include
-	${fifo_map_INCLUDE_DIRS}
+	$<BUILD_INTERFACE:${aisaka_SOURCE_DIR}/include>  
+	$<INSTALL_INTERFACE:include>
+	$<BUILD_INTERFACE:${aisaka_SOURCE_DIR}/lib/fifo_map/src>  
+	$<INSTALL_INTERFACE:lib/fifo_map/src>
 	${LIBMONGOCXX_INCLUDE_DIRS}
 	${Aegis_INCLUDE_DIRS}
 )
 
 target_link_libraries(aisaka PUBLIC
-	fifo_map
 	${LIBMONGOCXX_LIBRARIES}
 	${Aegis_LIBRARIES}
 )
@@ -42,6 +43,12 @@ if(MSVC)
   target_compile_options(aisaka PRIVATE $<$<CONFIG:RELEASE>:/Ox> /W4)
 else()
   target_compile_options(aisaka PRIVATE $<$<CONFIG:RELEASE>:-O3> -Wall -Wextra -pedantic)
+endif()
+
+include(CheckIPOSupported)
+check_ipo_supported(RESULT result)
+if(result)
+  set_target_properties(aisaka PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
 source_group(TREE "${aisaka_SOURCE_DIR}/include" PREFIX "Header Files" FILES ${HEADER_LIST})

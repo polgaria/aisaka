@@ -37,7 +37,7 @@ install(EXPORT aisakaTargets
     DESTINATION ${INSTALL_CONFIGDIR}
 )
 
-install(DIRECTORY include/aisaka
+install(DIRECTORY include
     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/aisaka
     FILES_MATCHING PATTERN "*.hpp"
 )

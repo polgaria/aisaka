@@ -18,34 +18,52 @@ void Aisaka::Client::message_create(
 	if (obj.msg.get_user().is_bot()) {
 		return;
 	}
-	auto content{obj.msg.get_content()};
+
+	std::string_view content{obj.msg.get_content()};
+	const auto& guild_id = obj.channel.get_guild_id();
+	std::string_view prefix;
 
 	// try to find an existing custom prefix
-	// if not found, use default prefix
-	std::string prefix{};
-	const auto& mongo_client = get_mongo_pool().acquire();
-	const auto& op_result =
-		(*mongo_client)[this->bot_name]["prefixes"].find_one(
-			document{} << "id" << obj.msg.get_guild().get_id() << finalize);
-	if (!op_result && !content.compare(0, this->default_prefix.size(),
-									   this->default_prefix)) {
-		prefix = this->default_prefix;
-	} else if (op_result) {
-		for (const auto& res : op_result->view()["prefix"].get_array().value) {
-			const auto& _prefix = std::string{res.get_utf8().value};
-			if (!content.compare(0, _prefix.size(), _prefix)) {
-				prefix = _prefix;
-				break;
+	// if not found in cache, try to get from DB
+	// if not found in DB, use default prefix
+	if (this->prefix_cache.count(guild_id) > 0) {
+		const auto& range = this->prefix_cache.equal_range(guild_id);
+		const auto& prefix_in_cache = std::find_if(
+			range.first, range.second, [&content](const auto& _prefix) {
+				return !content.compare(0, _prefix.second.length(),
+										_prefix.second.data());
+			});
+		if (prefix_in_cache != this->prefix_cache.end()) {
+			prefix = prefix_in_cache->second;
+		}
+	}
+
+	if (prefix.empty()) {
+		const auto& mongo_client = get_mongo_pool().acquire();
+		const auto& op_result =
+			(*mongo_client)[this->bot_name]["prefixes"].find_one(
+				document{} << "id" << obj.msg.get_guild().get_id() << finalize);
+		if (!op_result && !content.compare(0, this->default_prefix.size(),
+										   this->default_prefix)) {
+			prefix = this->default_prefix;
+			this->prefix_cache.emplace(guild_id, prefix);
+		} else if (op_result) {
+			for (const auto& res :
+				 op_result->view()["prefix"].get_array().value) {
+				const auto& _prefix = res.get_utf8().value.to_string();
+				if (!content.compare(0, _prefix.length(), _prefix)) {
+					prefix = _prefix;
+					this->prefix_cache.emplace(guild_id, std::move(_prefix));
+					break;
+				}
 			}
 		}
-	} else {
-		return;
 	}
 
 	// check if it starts with the configured prefix
 	if (!prefix.empty()) {
-		auto params = Aisaka::Util::String::split_command(
-			content.erase(0, prefix.length()), prefix);
+		content.remove_prefix(prefix.length());
+		auto params = Aisaka::Util::String::split_command(content, prefix);
 		if (
 			// only allow if it has at least 1 parameter
 			params.size() <= 1 &&
@@ -56,23 +74,22 @@ void Aisaka::Client::message_create(
 
 		// remove the params as we go
 		params.pop_front();
-		// make command name lower-case
-		const auto& command_name =
-			Aisaka::Util::String::to_lower(params.front());
 		if (params.empty()) {
 			return;
 		}
 
 		// get command
-		const auto& found_command = this->commands.all.find(command_name);
-		if (found_command == this->commands.all.end()) {
+		const auto& _found_command = this->get_commands().find_command(
+			Aisaka::Util::String::to_lower(params.front()));
+		if (!_found_command) {
 			obj.channel.create_message("Command not found.");
 			return;
 		}
+		const auto& found_command = _found_command.value();
 		params.pop_front();
 
 		// if the command is owner-only
-		if (found_command->second.owner_only()) {
+		if (found_command.owner_only()) {
 			// check if user is the bot owner
 			const auto& user_id = obj.msg.get_user().get_id().get();
 			if (user_id != this->owner_id) {
@@ -83,7 +100,7 @@ void Aisaka::Client::message_create(
 
 		// check how many parameters are required
 		unsigned short required_params = 0;
-		for (const auto& param : found_command->second.params()) {
+		for (const auto& param : found_command.params()) {
 			if (param.required()) {
 				required_params++;
 			}
@@ -94,6 +111,6 @@ void Aisaka::Client::message_create(
 		}
 
 		// call command
-		found_command->second.function()(obj, *this, params, prefix);
+		found_command.function()(obj, *this, params, prefix.data());
 	}
 }

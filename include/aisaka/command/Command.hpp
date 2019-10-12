@@ -9,51 +9,47 @@
 #include <functional>
 #include <unordered_set>
 
+#define GETTER_SETTER(fname, type)                   \
+	type fname() const noexcept { return _##fname; } \
+	Command& fname(type fname) noexcept {            \
+		_##fname = fname;                            \
+		return *this;                                \
+	}
+
 namespace Aisaka {
 class Client;
+
+template <class T = Aisaka::Client>
 class Command {
    public:
-	using Parameter = Aisaka::Parameter;
-	using Metadata = Aisaka::Metadata;
+	Command() {}
+	Command(std::string_view name) : _name(std::move(name)) {}
+	virtual ~Command() = default;
 
 	using Function = std::function<void(
-		aegis::gateway::events::message_create& obj, Aisaka::Client& client,
-		const std::deque<std::string>& params,
+		aegis::gateway::events::message_create& obj, T& client,
+		const std::deque<std::string_view>& params,
 		const std::string& command_prefix)>;
 
-	Command();
-	Command(std::string _name);
-
-	const std::string& name() const noexcept;
-	Command& name(const std::string& name) noexcept;
-
-	const Aisaka::Category& category() const noexcept;
-	Command& category(const Aisaka::Category& category) noexcept;
-
-	const std::deque<Parameter>& params() const noexcept;
-	Command& params(const std::deque<Parameter>& params) noexcept;
-
-	const std::unordered_set<std::string>& aliases() const noexcept;
-	Command& aliases(const std::unordered_set<std::string>& aliases) noexcept;
-
-	const Metadata& metadata() const noexcept;
-	Command& metadata(const Metadata& metadata) noexcept;
-
-	const Function& function() const noexcept;
-	Command& function(const Function& function) noexcept;
-
-	const bool& owner_only() const noexcept;
-	Command& owner_only(const bool& is_owner_only) noexcept;
+	GETTER_SETTER(name, const std::string_view&)
+	GETTER_SETTER(category, const Aisaka::Category<T>&)
+	GETTER_SETTER(params, const std::deque<Aisaka::Parameter>&)
+	GETTER_SETTER(aliases, const std::unordered_set<std::string_view>&)
+	GETTER_SETTER(metadata, const Aisaka::Metadata&)
+	GETTER_SETTER(function, const Function&)
+	GETTER_SETTER(owner_only, bool)
 
    private:
-	std::string _name;
-	Aisaka::Category _category = Aisaka::Category("None");
+	std::string_view _name;
+	Aisaka::Category<T> _category{"None"};
 
-	std::deque<Parameter> _params;
-	std::unordered_set<std::string> _aliases;
-	Metadata _metadata = Metadata();
+	std::deque<Aisaka::Parameter> _params;
+	std::unordered_set<std::string_view> _aliases;
+	Aisaka::Metadata _metadata = Metadata();
 
 	Function _function;
 	bool _owner_only = false;
 };
 }  // namespace Aisaka
+
+#undef GETTER_SETTER

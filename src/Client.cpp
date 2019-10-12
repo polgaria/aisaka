@@ -19,7 +19,7 @@ void Aisaka::Client::message_create(
 		return;
 	}
 
-	std::string_view content{obj.msg.get_content()};
+	std::string_view content = obj.msg.get_content();
 	const auto& guild_id = obj.channel.get_guild_id();
 	std::string_view prefix;
 
@@ -31,9 +31,9 @@ void Aisaka::Client::message_create(
 		const auto& prefix_in_cache = std::find_if(
 			range.first, range.second, [&content](const auto& _prefix) {
 				return !content.compare(0, _prefix.second.length(),
-										_prefix.second.data());
+										_prefix.second);
 			});
-		if (prefix_in_cache != this->prefix_cache.end()) {
+		if (prefix_in_cache != range.second) {
 			prefix = prefix_in_cache->second;
 		}
 	}

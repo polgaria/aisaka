@@ -1,6 +1,7 @@
 #pragma once
 
 #include <spdlog/fmt/bundled/format.h>
+
 #include <deque>
 #include <iterator>
 #include <optional>
@@ -29,9 +30,10 @@ class String {
 		return os.str();
 	}
 
-	static std::deque<std::string> split(const std::string&, const char& delim);
-	static std::deque<std::string> split_command(const std::string& source,
-												 const std::string& prefix);
-	static std::string to_lower(const std::string&);
+	static std::deque<std::string_view> split(const std::string_view& source,
+											  const char delim);
+	static std::deque<std::string_view> split_command(
+		const std::string_view& source, const std::string_view& prefix);
+	static std::string to_lower(const std::string_view&);
 };
 }  // namespace Aisaka::Util

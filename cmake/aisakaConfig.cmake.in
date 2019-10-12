@@ -11,7 +11,7 @@ find_package_handle_standard_args(@PROJECT_NAME@ CONFIG_MODE)
 if(NOT TARGET @PROJECT_NAME@::@aisaka_TARGET_NAME@)
     include("${CMAKE_CURRENT_LIST_DIR}/@aisaka_TARGETS_EXPORT_NAME@.cmake")
     if(NOT TARGET @aisaka_TARGET_NAME@)
-        add_library(@aisaka_TARGET_NAME@ INTERFACE IMPORTED)
+        add_library(@aisaka_TARGET_NAME@ IMPORTED)
         set_target_properties(@aisaka_TARGET_NAME@ PROPERTIES
             INTERFACE_LINK_LIBRARIES @PROJECT_NAME@::@aisaka_TARGET_NAME@
         )

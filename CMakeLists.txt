@@ -36,17 +36,33 @@ add_subdirectory(src)
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
-    ${aisaka_CMAKE_VERSION_CONFIG_FILE} COMPATIBILITY SameMajorVersion
-)
-configure_file(
-    ${aisaka_CMAKE_CONFIG_TEMPLATE}
-    ${aisaka_CMAKE_PROJECT_CONFIG_FILE}
-    @ONLY
+    ${aisaka_CMAKE_VERSION_CONFIG_FILE}
+	VERSION ${PACKAGE_VERSION}
+	COMPATIBILITY SameMajorVersion
 )
 
 install(
 	DIRECTORY ${aisaka_INCLUDE_BUILD_DIR}
 	DESTINATION ${aisaka_INCLUDE_INSTALL_DIR}
+)
+install(
+	TARGETS ${aisaka_TARGET_NAME}
+	EXPORT ${aisaka_TARGETS_EXPORT_NAME}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
+
+export(
+	TARGETS ${aisaka_TARGET_NAME}
+	NAMESPACE ${PROJECT_NAME}::
+	FILE ${aisaka_CMAKE_PROJECT_TARGETS_FILE}
+)
+export(PACKAGE ${PROJECT_NAME})
+
+configure_file(
+    ${aisaka_CMAKE_CONFIG_TEMPLATE}
+    ${aisaka_CMAKE_PROJECT_CONFIG_FILE}
+    @ONLY
 )
 install(
 	FILES
@@ -55,20 +71,8 @@ install(
 		${CMAKE_CURRENT_LIST_DIR}/cmake/Findfifo_map.cmake
 	DESTINATION ${aisaka_CONFIG_INSTALL_DIR}
 )
-export(
-	TARGETS ${aisaka_TARGET_NAME}
-	NAMESPACE ${PROJECT_NAME}::
-	FILE ${aisaka_CMAKE_PROJECT_TARGETS_FILE}
-)
-install(
-	TARGETS ${aisaka_TARGET_NAME}
-	EXPORT ${aisaka_TARGETS_EXPORT_NAME}
-	INCLUDES DESTINATION ${aisaka_INCLUDE_INSTALL_DIR}
-)
 install(
 	EXPORT ${aisaka_TARGETS_EXPORT_NAME}
 	NAMESPACE ${PROJECT_NAME}::
 	DESTINATION ${aisaka_CONFIG_INSTALL_DIR}
 )
-
-export(PACKAGE ${PROJECT_NAME})

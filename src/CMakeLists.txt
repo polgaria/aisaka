@@ -16,6 +16,7 @@ add_library(aisaka
 	Client.cpp
 	${HEADER_LIST}
 )
+add_library(aisaka::aisaka ALIAS aisaka)
 
 target_include_directories(aisaka PUBLIC
 	$<BUILD_INTERFACE:${aisaka_SOURCE_DIR}/include>  

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <aegis/gateway/events/message_create.hpp>
+#include <aegis.hpp>
 #include <aisaka/command/Metadata.hpp>
 #include <aisaka/command/Parameter.hpp>
 #include <aisaka/command/categories/Category.hpp>

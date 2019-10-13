@@ -1,7 +1,4 @@
-#include <aegis/channel.hpp>
-#include <aegis/gateway/events/message_create.hpp>
-#include <aegis/guild.hpp>
-#include <aegis/user.hpp>
+#include <aegis.hpp>
 #include <aisaka/Client.hpp>
 #include <aisaka/command/Commands.hpp>
 #include <aisaka/util/String.hpp>

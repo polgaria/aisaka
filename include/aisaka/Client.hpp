@@ -1,8 +1,6 @@
 #pragma once
 
-#include <aegis/core.hpp>
-#include <aegis/gateway/events/message_create.hpp>
-#include <aegis/gateway/events/message_reaction_add.hpp>
+#include <aegis.hpp>
 #include <aisaka/command/Commands.hpp>
 #include <mongocxx/pool.hpp>
 #include <unordered_map>

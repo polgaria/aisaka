@@ -30,7 +30,7 @@ set(aisaka_INCLUDE_BUILD_DIR		  "${PROJECT_SOURCE_DIR}/include/")
 find_package(fifo_map	 REQUIRED)
 find_package(libmongocxx REQUIRED)
 find_package(libbsoncxx  REQUIRED)
-find_package(Aegis		 REQUIRED)
+find_package(Aegis       REQUIRED)
 
 add_subdirectory(src)
 

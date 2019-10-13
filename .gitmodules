@@ -1,3 +1,7 @@
 [submodule "lib/fifo_map"]
 	path = lib/fifo_map
 	url = https://github.com/nlohmann/fifo_map.git
+[submodule "lib/aegis"]
+	path = lib/aegis
+	url = https://github.com/zeroxs/aegis.cpp
+	branch = develop

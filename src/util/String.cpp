@@ -27,7 +27,7 @@ std::string Aisaka::Util::String::to_lower(const std::string_view& source) {
 	std::string string_lower{source};
 	std::transform(string_lower.begin(), string_lower.end(),
 				   string_lower.begin(),
-				   [](unsigned char c) { return std::towlower(c); });
+				   [](unsigned char c) { return std::tolower(c); });
 
 	return string_lower;
 }

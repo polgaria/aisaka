@@ -20,13 +20,14 @@ add_library(aisaka::aisaka ALIAS aisaka)
 
 target_include_directories(aisaka PUBLIC
 	$<BUILD_INTERFACE:${aisaka_SOURCE_DIR}/include>
+	$<BUILD_INTERFACE:${Aegis_INCLUDE_DIRS}>
 	$<INSTALL_INTERFACE:include>
 	${LIBMONGOCXX_INCLUDE_DIRS}
 )
 
 target_link_libraries(aisaka PUBLIC
 	fifo_map
-	${Aegis_LIBRARIES}
+	Aegis::aegis
 	${LIBMONGOCXX_LIBRARIES}
 )
 

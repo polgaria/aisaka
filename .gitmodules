@@ -3,5 +3,5 @@
 	url = https://github.com/nlohmann/fifo_map.git
 [submodule "lib/aegis"]
 	path = lib/aegis
-	url = https://github.com/zeroxs/aegis.cpp
-	branch = develop
+	url = https://github.com/geniiii/aegis.cpp.git
+	branch = fix-cmake-subdir

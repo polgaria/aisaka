@@ -30,8 +30,8 @@ set(aisaka_INCLUDE_BUILD_DIR		  "${PROJECT_SOURCE_DIR}/include/")
 find_package(fifo_map	 REQUIRED)
 find_package(libmongocxx REQUIRED)
 find_package(libbsoncxx  REQUIRED)
-find_package(Aegis       REQUIRED)
 
+add_subdirectory(lib/aegis)
 add_subdirectory(src)
 
 include(CMakePackageConfigHelpers)
@@ -41,15 +41,22 @@ write_basic_package_version_file(
 	COMPATIBILITY SameMajorVersion
 )
 
+configure_file(
+    ${aisaka_CMAKE_CONFIG_TEMPLATE}
+    ${aisaka_CMAKE_PROJECT_CONFIG_FILE}
+    @ONLY
+)
 install(
 	DIRECTORY ${aisaka_INCLUDE_BUILD_DIR}
 	DESTINATION ${aisaka_INCLUDE_INSTALL_DIR}
 )
 install(
-	TARGETS ${aisaka_TARGET_NAME}
-	EXPORT ${aisaka_TARGETS_EXPORT_NAME}
-	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	FILES
+		${aisaka_CMAKE_PROJECT_CONFIG_FILE}
+		${aisaka_CMAKE_VERSION_CONFIG_FILE}
+		${CMAKE_CURRENT_LIST_DIR}/cmake/Findfifo_map.cmake
+		${CMAKE_CURRENT_LIST_DIR}/cmake/FindAegis.cmake
+	DESTINATION ${aisaka_CONFIG_INSTALL_DIR}
 )
 
 export(
@@ -59,18 +66,14 @@ export(
 )
 export(PACKAGE ${PROJECT_NAME})
 
-configure_file(
-    ${aisaka_CMAKE_CONFIG_TEMPLATE}
-    ${aisaka_CMAKE_PROJECT_CONFIG_FILE}
-    @ONLY
-)
 install(
-	FILES
-		${aisaka_CMAKE_PROJECT_CONFIG_FILE}
-		${aisaka_CMAKE_VERSION_CONFIG_FILE}
-		${CMAKE_CURRENT_LIST_DIR}/cmake/Findfifo_map.cmake
-	DESTINATION ${aisaka_CONFIG_INSTALL_DIR}
+	TARGETS ${aisaka_TARGET_NAME}
+	EXPORT ${aisaka_TARGETS_EXPORT_NAME}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	INCLUDES DESTINATION ${aisaka_INCLUDE_INSTALL_DIR}	
 )
+
 install(
 	EXPORT ${aisaka_TARGETS_EXPORT_NAME}
 	NAMESPACE ${PROJECT_NAME}::

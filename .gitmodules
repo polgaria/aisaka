@@ -4,4 +4,4 @@
 [submodule "lib/aegis"]
 	path = lib/aegis
 	url = https://github.com/geniiii/aegis.cpp.git
-	branch = fix-cmake-subdir
+	branch = msvc-fix

@@ -31,6 +31,8 @@ find_package(fifo_map	 REQUIRED)
 find_package(libmongocxx REQUIRED)
 find_package(libbsoncxx  REQUIRED)
 
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+set(JSON_MultipleHeaders ON CACHE INTERNAL "")
 add_subdirectory(lib/aegis)
 add_subdirectory(src)
 

@@ -1,65 +1,61 @@
-set(HEADER_LIST
-	"${aisaka_SOURCE_DIR}/include/aisaka/command/Command.hpp"
-	"${aisaka_SOURCE_DIR}/include/aisaka/command/Commands.hpp"	
-	"${aisaka_SOURCE_DIR}/include/aisaka/command/Parameter.hpp"
-	"${aisaka_SOURCE_DIR}/include/aisaka/command/Metadata.hpp"
-	"${aisaka_SOURCE_DIR}/include/aisaka/command/util/GetterSetterMacro.hpp"	
-	"${aisaka_SOURCE_DIR}/include/aisaka/command/categories/Category.hpp"
-	"${aisaka_SOURCE_DIR}/include/aisaka/Client.hpp"
-	"${aisaka_SOURCE_DIR}/include/aisaka/util/String.hpp"
-)
+configure_file("${aisaka_SOURCE_DIR}/include/aisaka/Version.hpp.in"
+			   "${aisaka_SOURCE_DIR}/include/aisaka/Version.hpp")
 
-add_library(aisaka
-	Client.cpp
-	command/Parameter.cpp
-	command/Metadata.cpp
-	util/String.cpp
-	${HEADER_LIST}
-)
+set(HEADER_LIST
+	"${aisaka_SOURCE_DIR}/include/aisaka/Client.hpp"
+	"${aisaka_SOURCE_DIR}/include/aisaka/Bot.hpp"
+	"${aisaka_SOURCE_DIR}/include/aisaka/Version.hpp"
+    "${aisaka_SOURCE_DIR}/include/aisaka/command/Command.hpp"
+    "${aisaka_SOURCE_DIR}/include/aisaka/command/Commands.hpp"
+    "${aisaka_SOURCE_DIR}/include/aisaka/command/Parameter.hpp"
+    "${aisaka_SOURCE_DIR}/include/aisaka/command/Metadata.hpp"
+	"${aisaka_SOURCE_DIR}/include/aisaka/command/categories/Category.hpp"
+    "${aisaka_SOURCE_DIR}/include/aisaka/command/util/GetterSetterMacro.hpp"
+    "${aisaka_SOURCE_DIR}/include/aisaka/util/String.hpp"
+	CACHE INTERNAL "Header Files")
+
+add_library(aisaka Bot.cpp command/Parameter.cpp command/Metadata.cpp
+                   util/String.cpp ${HEADER_LIST})
+set_target_properties(aisaka PROPERTIES POSITION_INDEPENDENT_CODE 1)
+set_target_properties(aisaka PROPERTIES SOVERSION ${aisaka_SOVERSION})
 add_library(aisaka::aisaka ALIAS aisaka)
 
-target_include_directories(aisaka PUBLIC
-	$<BUILD_INTERFACE:${aisaka_SOURCE_DIR}/include>
-	$<BUILD_INTERFACE:${Aegis_INCLUDE_DIRS}>
-	$<INSTALL_INTERFACE:include>
-	${LIBMONGOCXX_INCLUDE_DIRS}
-)
+target_include_directories(
+  aisaka
+  PUBLIC $<BUILD_INTERFACE:${aisaka_SOURCE_DIR}/include>
+         $<BUILD_INTERFACE:${Aegis_INCLUDE_DIRS}> $<INSTALL_INTERFACE:include>
+         ${LIBMONGOCXX_INCLUDE_DIRS})
 
-target_link_libraries(aisaka PUBLIC
-	fifo_map
-	Aegis::aegis
-	${LIBMONGOCXX_LIBRARIES}
-)
+target_link_libraries(aisaka PUBLIC fifo_map Aegis::aegis
+                                    ${LIBMONGOCXX_LIBRARIES})
 
-target_compile_definitions(aisaka PUBLIC
-	${LIBMONGOCXX_DEFINITIONS}
-)
+target_compile_definitions(aisaka PUBLIC ${LIBMONGOCXX_DEFINITIONS})
 
 target_compile_features(aisaka PRIVATE cxx_std_17 ${Aegis_CFLAGS_OTHER})
 if(MSVC)
-	target_compile_options(aisaka PRIVATE $<$<CONFIG:RELEASE>:/Ox> /W4)
+  target_compile_options(aisaka PRIVATE $<$<CONFIG:RELEASE>:/Ox> /W4)
 else()
-	target_compile_options(aisaka PRIVATE $<$<CONFIG:RELEASE>:-O3> -Wall -Wextra -pedantic)
+  target_compile_options(aisaka PRIVATE $<$<CONFIG:RELEASE>:-O3> -Wall -Wextra
+                                        -pedantic)
 endif()
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result)
 if(result)
-	message(STATUS "IPO/LTO enabled")
-	set_target_properties(aisaka PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
+  message(STATUS "IPO/LTO enabled")
+  set_target_properties(aisaka PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
-source_group(TREE "${aisaka_SOURCE_DIR}/include" PREFIX "Header Files" FILES ${HEADER_LIST})
+source_group(TREE "${aisaka_SOURCE_DIR}/include" PREFIX "Header Files" FILES
+             ${HEADER_LIST})
 
 export(
-	TARGETS ${aisaka_TARGET_NAME}
-	NAMESPACE ${PROJECT_NAME}::
-	FILE ${aisaka_CMAKE_PROJECT_TARGETS_FILE}
-)
+  TARGETS ${aisaka_TARGET_NAME}
+  NAMESPACE ${PROJECT_NAME}::
+  FILE ${aisaka_CMAKE_PROJECT_TARGETS_FILE})
 install(
-	TARGETS ${aisaka_TARGET_NAME}
-	EXPORT ${aisaka_TARGETS_EXPORT_NAME}
-	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	INCLUDES DESTINATION ${aisaka_INCLUDE_INSTALL_DIR}	
-)
+  TARGETS ${aisaka_TARGET_NAME}
+  EXPORT ${aisaka_TARGETS_EXPORT_NAME}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  INCLUDES DESTINATION ${aisaka_INCLUDE_INSTALL_DIR})

@@ -3,9 +3,8 @@
 #include <iostream>
 #include <sstream>
 
-auto Aisaka::Util::String::split(const std::string_view& source,
-								 const char delim)
-	-> std::deque<std::string_view> {
+std::deque<std::string_view> Aisaka::Util::String::split(
+	const std::string_view& source, const char delim) {
 	std::deque<std::string_view> tokens;
 
 	std::size_t start = 0;
@@ -20,17 +19,15 @@ auto Aisaka::Util::String::split(const std::string_view& source,
 	return tokens;
 }
 
-auto Aisaka::Util::String::split_command(const std::string_view& source,
-										 const std::string_view& prefix)
-	-> std::deque<std::string_view> {
+std::deque<std::string_view> Aisaka::Util::String::split_command(
+	const std::string_view& source, const std::string_view& prefix) {
 	auto arguments = Aisaka::Util::String::split(source, ' ');
 	arguments.push_front(prefix);
 
 	return arguments;
 }
 
-auto Aisaka::Util::String::to_lower(const std::string_view& source)
-	-> std::string {
+std::string Aisaka::Util::String::to_lower(const std::string_view& source) {
 	std::string string_lower{source};
 	std::transform(string_lower.begin(), string_lower.end(),
 				   string_lower.begin(),

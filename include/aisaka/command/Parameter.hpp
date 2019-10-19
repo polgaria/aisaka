@@ -5,13 +5,23 @@
 namespace Aisaka {
 class Parameter {
    public:
-	Parameter(std::string_view _name);
+	/// Constructs a parameter.
+	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *
+	 *    By default, prefixes are required.
+	 * @endverbatim
+	 *
+	 * @param name The parameter's name
+	 */
+	explicit Parameter(std::string_view name);
 
-	[[nodiscard]] auto name() const noexcept -> const std::string_view&;
-	auto name(const std::string_view& name) noexcept -> Parameter&;
+	[[nodiscard]] const std::string_view& name() const noexcept;
+	Parameter& name(const std::string_view& name) noexcept;
 
-	[[nodiscard]] auto required() const noexcept -> bool;
-	auto required(bool required) noexcept -> Parameter&;
+	[[nodiscard]] bool required() const noexcept;
+	Parameter& required(bool required) noexcept;
 
    private:
 	std::string_view _name;

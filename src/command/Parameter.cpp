@@ -3,7 +3,7 @@
 
 using Parameter = Aisaka::Parameter;
 
-Parameter::Parameter(std::string_view _name) : _name(_name) {}
+Parameter::Parameter(std::string_view name) : _name(name) {}
 
 GETTER_SETTER(required, Parameter, bool)
 GETTER_SETTER(name, Parameter, const std::string_view&)

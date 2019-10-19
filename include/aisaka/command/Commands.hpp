@@ -8,9 +8,16 @@ namespace Aisaka {
 template <class T>
 class Commands {
    public:
+	/// All of the commands that have been added, with the key being the name of each one.
 	nlohmann::fifo_map<std::string, Aisaka::Command<T>> all;
+	/// All of the categories that have been added, with the key being the name of each one.
 	std::unordered_map<std::string, Aisaka::Category<T>> categories;
 
+	/// Adds a command and its aliases.
+	/**
+	 * @param command The command to be added
+	 * @param log The logger to be used
+	 */
 	void add_command(Aisaka::Command<T> command, spdlog::logger& log) {
 		const auto& category_name = command.category().get_name().data();
 		const auto& command_name = command.name().data();
@@ -37,6 +44,11 @@ class Commands {
 		}
 	}
 
+	/// Searches for a command.
+	/**
+	 * @param command_name The name of the command to search for
+	 * @return If no command was found, std::nullopt; if one *was* found, the command itself.
+	 */
 	const std::optional<Aisaka::Command<T>> find_command(
 		const std::string_view& command_name) const {
 		const auto& command = all.find(std::string{command_name});
@@ -44,6 +56,11 @@ class Commands {
 									: std::nullopt;
 	}
 
+	/// Searches for a category.
+	/**
+	 * @param category_name The name of the category to search for
+	 * @return If no category was found, return std::nullopt; if one *was* found, the category itself.
+	 */
 	const std::optional<Aisaka::Category<T>> find_category(
 		const std::string_view& category_name) const {
 		const auto& category = categories.find(std::string{category_name});

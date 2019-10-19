@@ -5,26 +5,35 @@
 #include <fifo_map.hpp>
 
 namespace Aisaka {
-class Client;
+class Bot;
 
-template <class T = Aisaka::Client>
+template <class T = Aisaka::Bot>
 class Commands;
 
-template <class T = Aisaka::Client>
+template <class T = Aisaka::Bot>
 class Category {
    public:
-	Category(std::string name) : name(std::move(name)) {}
+	explicit Category(std::string name) : _name(std::move(name)) {}
 	virtual ~Category() = default;
 
+	/// The function that initializes this category. It should add all of the
+	/// category's commands to the provided Aisaka::Commands.
 	virtual void init(spdlog::logger&, Aisaka::Commands<T>&) {}
-	[[nodiscard]] auto get_name() const noexcept -> const std::string& {
-		return this->name;
+
+	[[deprecated("Renamed to Aisaka::Category::name")]] [[nodiscard]] auto
+	get_name() const noexcept -> const std::string& {
+		return this->_name;
+	}
+	[[nodiscard]] auto name() const noexcept -> const std::string& {
+		return this->_name;
 	}
 
    protected:
+	/// Can be used as a short form of the type required to initialize parameters
 	using Examples = const nlohmann::fifo_map<std::string, std::string>;
 
    private:
-	std::string name;
+	// perhaps this should be a std::string_view?
+	std::string _name;
 };
 }  // namespace Aisaka

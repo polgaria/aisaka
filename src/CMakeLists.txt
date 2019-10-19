@@ -10,10 +10,10 @@ set(HEADER_LIST
 )
 
 add_library(aisaka
+	Client.cpp
 	command/Parameter.cpp
 	command/Metadata.cpp
 	util/String.cpp
-	Client.cpp
 	${HEADER_LIST}
 )
 add_library(aisaka::aisaka ALIAS aisaka)

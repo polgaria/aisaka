@@ -10,39 +10,44 @@ class Client {
    public:
 	Client(const std::string_view& default_prefix, const std::string& bot_name,
 		   const int64_t& owner_id)
-		: default_prefix(default_prefix),
-		  bot_name(bot_name),
-		  owner_id(owner_id) {}
-	virtual ~Client() = default;
+		: _default_prefix(default_prefix),
+		  _bot_name(bot_name),
+		  _owner_id(owner_id) {}
+	virtual ~Client();
 
-	virtual void set_bot(aegis::core& bot) noexcept { this->bot = &bot; }
-	virtual aegis::core& get_bot() noexcept { return *bot; }
-
-	const Aisaka::Commands<>& get_commands() const noexcept {
-		return this->commands;
+	void bot(aegis::core& bot) noexcept { this->_bot = &bot; }
+	void mongo_pool(mongocxx::pool&& client) noexcept {
+		this->_mongo_pool = &client;
 	}
-	virtual std::unordered_multimap<int64_t, std::string>&
-	get_prefix_cache() noexcept {
-		return this->prefix_cache;
+	[[nodiscard]] auto bot() noexcept -> aegis::core& { return *this->_bot; }
+	[[nodiscard]] auto mongo_pool() noexcept -> mongocxx::pool& {
+		return *this->_mongo_pool;
 	}
 
-	virtual void set_mongo_pool(mongocxx::pool&& client) noexcept {
-		this->mongo_pool = &client;
+	[[nodiscard]] auto commands() const noexcept -> const Aisaka::Commands<>& {
+		return this->_commands;
 	}
-	virtual mongocxx::pool& get_mongo_pool() noexcept { return *mongo_pool; }
 
-	virtual void message_create(aegis::gateway::events::message_create obj);
+	[[nodiscard]] auto default_prefix() noexcept -> std::string_view& {
+		return this->_default_prefix;
+	}
+	[[nodiscard]] auto bot_name() noexcept -> std::string& {
+		return this->_bot_name;
+	}
+	[[nodiscard]] auto owner_id() noexcept -> int64_t& {
+		return this->_owner_id;
+	}
 
-   protected:
-	aegis::core* bot;
-	mongocxx::pool* mongo_pool;
+	virtual void on_message_create(aegis::gateway::events::message_create) {}
 
-	std::string_view default_prefix;
-	std::string bot_name;
-	int64_t owner_id;
+   private:
+	aegis::core* _bot;
+	mongocxx::pool* _mongo_pool;
 
-	Aisaka::Commands<> commands;
+	std::string_view _default_prefix;
+	std::string _bot_name;
+	int64_t _owner_id;
 
-	std::unordered_multimap<int64_t, std::string> prefix_cache;
+	Aisaka::Commands<> _commands;
 };
 }  // namespace Aisaka

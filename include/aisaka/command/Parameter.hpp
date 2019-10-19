@@ -7,11 +7,11 @@ class Parameter {
    public:
 	Parameter(std::string_view _name);
 
-	const std::string_view& name() const noexcept;
-	Parameter& name(const std::string_view& name) noexcept;
+	[[nodiscard]] auto name() const noexcept -> const std::string_view&;
+	auto name(const std::string_view& name) noexcept -> Parameter&;
 
-	const bool& required() const noexcept;
-	Parameter& required(const bool& required) noexcept;
+	[[nodiscard]] auto required() const noexcept -> bool;
+	auto required(bool required) noexcept -> Parameter&;
 
    private:
 	std::string_view _name;

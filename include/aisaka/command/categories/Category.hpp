@@ -17,7 +17,9 @@ class Category {
 	virtual ~Category() = default;
 
 	virtual void init(spdlog::logger&, Aisaka::Commands<T>&) {}
-	const std::string& get_name() const noexcept { return this->name; }
+	[[nodiscard]] auto get_name() const noexcept -> const std::string& {
+		return this->name;
+	}
 
    protected:
 	using Examples = const nlohmann::fifo_map<std::string, std::string>;

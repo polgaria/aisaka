@@ -5,13 +5,14 @@
 namespace Aisaka {
 class Metadata {
    public:
-	const std::string& description() const noexcept;
-	Metadata& description(const std::string& description) noexcept;
+	[[nodiscard]] auto description() const noexcept -> const std::string&;
+	auto description(const std::string& description) noexcept -> Metadata&;
 
-	const nlohmann::fifo_map<std::string, std::string>& examples() const
-		noexcept;
-	Metadata& examples(
-		const nlohmann::fifo_map<std::string, std::string>&& examples) noexcept;
+	[[nodiscard]] auto examples() const noexcept
+		-> const nlohmann::fifo_map<std::string, std::string>&;
+	auto examples(
+		const nlohmann::fifo_map<std::string, std::string>&& examples) noexcept
+		-> Metadata&;
 
    private:
 	std::string _description;

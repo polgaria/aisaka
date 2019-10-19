@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12...3.15)
 
-project(aisaka VERSION 1.1
+project(aisaka VERSION 2.0
                DESCRIPTION "aegis.cpp command system"
                LANGUAGES CXX
 )
@@ -58,7 +58,6 @@ install(
 		${aisaka_CMAKE_PROJECT_CONFIG_FILE}
 		${aisaka_CMAKE_VERSION_CONFIG_FILE}
 		${CMAKE_CURRENT_LIST_DIR}/cmake/Findfifo_map.cmake
-		${CMAKE_CURRENT_LIST_DIR}/cmake/FindAegis.cmake
 	DESTINATION ${aisaka_CONFIG_INSTALL_DIR}
 )
 

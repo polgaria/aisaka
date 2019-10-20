@@ -23,6 +23,11 @@ class Bot {
 	[[nodiscard]] aegis::core& core() noexcept { return *this->_core; }
 
 	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *	  This method has been deprecated.
+	 * @endverbatim
+	 * 
 	 * @deprecated since 2.1
 	 * @see core(aegis::core& core)
 	 */
@@ -31,6 +36,11 @@ class Bot {
 		this->_core = &bot;
 	}
 	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *	  This method has been deprecated.
+	 * @endverbatim
+	 * 
 	 * @deprecated since 2.1
 	 * @see core()
 	 */
@@ -40,12 +50,22 @@ class Bot {
 	}
 
 	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *	  This method has been deprecated.
+	 * @endverbatim
+	 * 
 	 * @deprecated since 2.1
 	 */
 	[[deprecated]] void mongo_pool(mongocxx::pool&& client) noexcept {
 		this->_mongo_pool = &client;
 	}
 	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *	  This method has been deprecated.
+	 * @endverbatim
+	 * 
 	 * @deprecated since 2.1
 	 */
 	[[deprecated]] [[nodiscard]] mongocxx::pool& mongo_pool() noexcept {
@@ -62,6 +82,11 @@ class Bot {
 
 	[[nodiscard]] std::string& name() noexcept { return this->_name; }
 	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *	  This method has been deprecated.
+	 * @endverbatim
+	 * 
 	 * @deprecated since 2.1
 	 * @see name()
 	 */
@@ -77,6 +102,11 @@ class Bot {
    private:
 	aegis::core* _core;
 	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *	  This variable has been deprecated.
+	 * @endverbatim
+	 * 
 	 * @deprecated since 2.1
 	 */
 	[[deprecated]] mongocxx::pool* _mongo_pool;

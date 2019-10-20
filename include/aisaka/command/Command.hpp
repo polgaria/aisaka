@@ -26,7 +26,6 @@ class Command {
 	/**
 	 * @verbatim embed:rst:leading-asterisk
 	 * .. note::
-	 *
 	 *	  This expects that you'll use the name setter to set a name for it later.
 	 * @endverbatim
 	 */

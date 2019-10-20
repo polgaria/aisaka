@@ -9,7 +9,6 @@ class Parameter {
 	/**
 	 * @verbatim embed:rst:leading-asterisk
 	 * .. note::
-	 *
 	 *    By default, prefixes are required.
 	 * @endverbatim
 	 *

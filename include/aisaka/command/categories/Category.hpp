@@ -29,7 +29,7 @@ class Category {
 	}
 
    protected:
-	/// Can be used as a short form of the type required to initialize parameters
+	/// Can be used as a short form of the type required to initialize parameters.
 	using Examples = const nlohmann::fifo_map<std::string, std::string>;
 
    private:

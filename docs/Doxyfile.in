@@ -2,3 +2,6 @@ INPUT = "@DOXYGEN_INPUT_DIR@"
 OUTPUT_DIRECTORY = "@DOXYGEN_OUTPUT_DIR@"
 GENERATE_XML = YES
 RECURSIVE = YES
+
+ALIASES += "rst=@verbatim embed:rst:leading-asterisk"
+ALIASES += "endrst=@endverbatim"

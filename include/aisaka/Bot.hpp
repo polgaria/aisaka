@@ -10,9 +10,9 @@ class Bot {
    public:
 	/// Constructs a Bot.
 	/**
-	 * @param default_prefix The bot's default prefix
-	 * @param bot_name The bot's name
-	 * @param owner_id The ID of the bot's owner
+	 * @param default_prefix The bot's default prefix.
+	 * @param name The bot's name.
+	 * @param owner_id The ID of the bot's owner.
 	 */
 	Bot(const std::string_view& default_prefix, const std::string& name,
 		const int64_t& owner_id)
@@ -23,10 +23,10 @@ class Bot {
 	[[nodiscard]] aegis::core& core() noexcept { return *this->_core; }
 
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
 	 *	  This method has been deprecated.
-	 * @endverbatim
+	 * @endrst
 	 * 
 	 * @deprecated since 2.1
 	 * @see core(aegis::core& core)
@@ -36,10 +36,10 @@ class Bot {
 		this->_core = &bot;
 	}
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
 	 *	  This method has been deprecated.
-	 * @endverbatim
+	 * @endrst
 	 * 
 	 * @deprecated since 2.1
 	 * @see core()
@@ -50,10 +50,10 @@ class Bot {
 	}
 
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
 	 *	  This method has been deprecated.
-	 * @endverbatim
+	 * @endrst
 	 * 
 	 * @deprecated since 2.1
 	 */
@@ -61,10 +61,10 @@ class Bot {
 		this->_mongo_pool = &client;
 	}
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
 	 *	  This method has been deprecated.
-	 * @endverbatim
+	 * @endrst
 	 * 
 	 * @deprecated since 2.1
 	 */
@@ -82,10 +82,10 @@ class Bot {
 
 	[[nodiscard]] std::string& name() noexcept { return this->_name; }
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
 	 *	  This method has been deprecated.
-	 * @endverbatim
+	 * @endrst
 	 * 
 	 * @deprecated since 2.1
 	 * @see name()
@@ -102,10 +102,10 @@ class Bot {
    private:
 	aegis::core* _core;
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
 	 *	  This variable has been deprecated.
-	 * @endverbatim
+	 * @endrst
 	 * 
 	 * @deprecated since 2.1
 	 */

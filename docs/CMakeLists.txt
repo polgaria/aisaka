@@ -42,8 +42,7 @@ if(Doxygen_FOUND AND Sphinx_FOUND)
       -Dbreathe_projects.aisaka=${DOXYGEN_OUTPUT_DIR}/xml ${SPHINX_SOURCE}
       ${SPHINX_BUILD}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    DEPENDS # Other docs files you want to track should go here (or in some variable)
-            ${DOC_FILES} ${DOXYGEN_INDEX_FILE}
+    DEPENDS ${DOC_FILES} ${DOXYGEN_INDEX_FILE}
     MAIN_DEPENDENCY ${SPHINX_SOURCE}/conf.py
     COMMENT "Generating documentation with Sphinx")
 

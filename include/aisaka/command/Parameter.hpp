@@ -5,14 +5,14 @@
 namespace Aisaka {
 class Parameter {
    public:
-	/// Constructs a parameter.
+	/// Constructs a command parameter.
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
-	 *    By default, prefixes are required.
-	 * @endverbatim
+	 *    By default, command parameters are required.
+	 * @endrst
 	 *
-	 * @param name The parameter's name
+	 * @param name The parameter's name.
 	 */
 	explicit Parameter(std::string_view name);
 

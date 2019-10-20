@@ -14,20 +14,20 @@ class Metadata {
 	/**
 	 * @param examples A nlohmann::fifo_map; the key is the user input, while
 	 * the value is the result.
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 *     .. code-block:: cpp
 	 *
 	 *        nlohmann::fifo_map<std::string, std::string>{
 	 *            {"add test", "Adds `test` to the guild prefixes."}
 	 *        }
-	 * @endverbatim
+	 * @endrst
 	 * could possibly be used in a help command, resulting in
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 *     .. code-block:: md
 	 *
 	 *		  `> t.prefix add test`
 	 *		  Adds `test` to the guild prefixes.
-	 * @endverbatim
+	 * @endrst
 	 */
 	Metadata& examples(
 		const nlohmann::fifo_map<std::string, std::string>&& examples) noexcept;

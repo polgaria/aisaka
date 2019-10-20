@@ -5,6 +5,11 @@
 #pragma once
 
 /// The library's version number as a dotted triplet string.
+/**
+ * @code
+ * 2.1.0
+ * @endcode
+ */
 #define AISAKA_VERSION "2.1.0"
 
 /// The library's major version number.

@@ -4,10 +4,10 @@
 
 namespace Aisaka {
 /**
- * @verbatim embed:rst:leading-asterisk
+ * @rst
  * .. note::
  *	  This class has been deprecated.
- * @endverbatim
+ * @endrst
  * 
  * @deprecated since 2.1
  * @see Aisaka::Bot

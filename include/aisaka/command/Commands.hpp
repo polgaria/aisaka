@@ -15,8 +15,8 @@ class Commands {
 
 	/// Adds a command and its aliases.
 	/**
-	 * @param command The command to be added
-	 * @param log The logger to be used
+	 * @param command The command to be added.
+	 * @param log The logger to be used.
 	 */
 	void add_command(Aisaka::Command<T> command, spdlog::logger& log) {
 		const auto& category_name = command.category().get_name().data();
@@ -46,7 +46,7 @@ class Commands {
 
 	/// Searches for a command.
 	/**
-	 * @param command_name The name of the command to search for
+	 * @param command_name The name of the command to search for.
 	 * @return If no command was found, std::nullopt; if one *was* found, the command itself.
 	 */
 	const std::optional<Aisaka::Command<T>> find_command(
@@ -58,7 +58,7 @@ class Commands {
 
 	/// Searches for a category.
 	/**
-	 * @param category_name The name of the category to search for
+	 * @param category_name The name of the category to search for.
 	 * @return If no category was found, return std::nullopt; if one *was* found, the category itself.
 	 */
 	const std::optional<Aisaka::Category<T>> find_category(

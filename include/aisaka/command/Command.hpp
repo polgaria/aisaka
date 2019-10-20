@@ -24,10 +24,10 @@ class Command {
    public:
 	/// Constructs a command without a name.
 	/**
-	 * @verbatim embed:rst:leading-asterisk
+	 * @rst
 	 * .. note::
 	 *	  This expects that you'll use the name setter to set a name for it later.
-	 * @endverbatim
+	 * @endrst
 	 */
 	Command() {}
 	/// Constructs a command.

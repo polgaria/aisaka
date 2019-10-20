@@ -4,7 +4,7 @@
 API Reference
 *************
 
-All functions and types provided by the library reside in namespace ``Aisaka``.
+All functions, types and classes provided by the library reside in namespace ``Aisaka``.
 
 Bot
 ---
@@ -42,4 +42,3 @@ Metadata
 Version
 -------
 .. doxygenfile:: Version.hpp
-

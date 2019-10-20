@@ -9,23 +9,35 @@
 #include <functional>
 #include <unordered_set>
 
-#define GETTER_SETTER(fname, type)                                       \
-	[[nodiscard]] auto fname() const noexcept->type { return _##fname; } \
-	auto fname(type fname) noexcept->Command& {                          \
-		_##fname = fname;                                                \
-		return *this;                                                    \
+#define GETTER_SETTER(fname, type)                                 \
+	[[nodiscard]] type fname() const noexcept { return _##fname; } \
+	Command& fname(type fname) noexcept {                          \
+		_##fname = fname;                                          \
+		return *this;                                              \
 	}
 
 namespace Aisaka {
-class Client;
+class Bot;
 
-template <class T = Aisaka::Client>
+template <class T = Aisaka::Bot>
 class Command {
    public:
+	/// Constructs a command without a name.
+	/**
+	 * @verbatim embed:rst:leading-asterisk
+	 * .. note::
+	 *	  This expects that you'll use the name setter to set a name for it later.
+	 * @endverbatim
+	 */
 	Command() {}
-	Command(std::string_view name) : _name(std::move(name)) {}
+	/// Constructs a command.
+	/**
+	 * @param name The name of the command
+	 */
+	explicit Command(std::string_view name) : _name(name) {}
 	virtual ~Command() = default;
 
+	/// The function each command should adhere to.
 	using Function = std::function<void(
 		aegis::gateway::events::message_create& obj, T& client,
 		const std::deque<std::string_view>& params,

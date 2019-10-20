@@ -7,10 +7,10 @@
 /// The library's version number as a dotted triplet string.
 /**
  * @code
- * 2.1.0
+ * 2.1.1
  * @endcode
  */
-#define AISAKA_VERSION "2.1.0"
+#define AISAKA_VERSION "2.1.1"
 
 /// The library's major version number.
 #define AISAKA_VERSION_MAJOR "2"
@@ -19,4 +19,4 @@
 #define AISAKA_VERSION_MINOR "1"
 
 /// The library's patch number.
-#define AISAKA_VERSION_PATCH "0"
+#define AISAKA_VERSION_PATCH "1"

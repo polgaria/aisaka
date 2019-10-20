@@ -16,7 +16,7 @@ class Metadata {
 	 * the value is the result.
 	 * @verbatim embed:rst:leading-asterisk
 	 *     .. code-block:: cpp
-	 * 
+	 *
 	 *        nlohmann::fifo_map<std::string, std::string>{
 	 *            {"add test", "Adds `test` to the guild prefixes."}
 	 *        }
@@ -24,7 +24,7 @@ class Metadata {
 	 * could possibly be used in a help command, resulting in
 	 * @verbatim embed:rst:leading-asterisk
 	 *     .. code-block:: md
-	 * 
+	 *
 	 *		  `> t.prefix add test`
 	 *		  Adds `test` to the guild prefixes.
 	 * @endverbatim

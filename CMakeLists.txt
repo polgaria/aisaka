@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12...3.15)
 set(aisaka_SOVERSION 2)
 set(aisaka_VERSION_MAJOR 2)
 set(aisaka_VERSION_MINOR 1)
-set(aisaka_VERSION_PATCH 1)
+set(aisaka_VERSION_PATCH 2)
 set(aisaka_VERSION "${aisaka_VERSION_MAJOR}.${aisaka_VERSION_MINOR}.${aisaka_VERSION_PATCH}")
 
 project(

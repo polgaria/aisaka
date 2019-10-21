@@ -9,11 +9,11 @@
 #include <functional>
 #include <unordered_set>
 
-#define GETTER_SETTER(fname, type)                                 \
-	[[nodiscard]] type fname() const noexcept { return _##fname; } \
-	Command& fname(type fname) noexcept {                          \
-		_##fname = fname;                                          \
-		return *this;                                              \
+#define GETTER_SETTER(fname, type)                                        \
+	[[nodiscard]] inline type fname() const noexcept { return _##fname; } \
+	inline Command& fname(type fname) noexcept {                          \
+		_##fname = fname;                                                 \
+		return *this;                                                     \
 	}
 
 namespace Aisaka {

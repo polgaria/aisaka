@@ -19,8 +19,8 @@ class Bot {
 		: _default_prefix(default_prefix), _name(name), _owner_id(owner_id) {}
 	virtual ~Bot();
 
-	void core(aegis::core& core) noexcept { this->_core = &core; }
-	[[nodiscard]] aegis::core& core() noexcept { return *this->_core; }
+	inline void core(aegis::core& core) noexcept { this->_core = &core; }
+	[[nodiscard]] inline aegis::core& core() noexcept { return *this->_core; }
 
 	/**
 	 * @rst
@@ -31,7 +31,7 @@ class Bot {
 	 * @deprecated since 2.1
 	 * @see core(aegis::core& core)
 	 */
-	[[deprecated("Renamed to Aisaka::Bot::core")]] void bot(
+	[[deprecated("Renamed to Aisaka::Bot::core")]] inline void bot(
 		aegis::core& bot) noexcept {
 		this->_core = &bot;
 	}
@@ -44,7 +44,8 @@ class Bot {
 	 * @deprecated since 2.1
 	 * @see core()
 	 */
-	[[deprecated("Renamed to Aisaka::Bot::core")]] [[nodiscard]] aegis::core&
+	[[deprecated("Renamed to Aisaka::Bot::core")]] [
+		[nodiscard]] inline aegis::core&
 	bot() noexcept {
 		return *this->_core;
 	}
@@ -57,7 +58,7 @@ class Bot {
 	 * 
 	 * @deprecated since 2.1
 	 */
-	[[deprecated]] void mongo_pool(mongocxx::pool&& client) noexcept {
+	[[deprecated]] inline void mongo_pool(mongocxx::pool&& client) noexcept {
 		this->_mongo_pool = &client;
 	}
 	/**
@@ -68,15 +69,15 @@ class Bot {
 	 * 
 	 * @deprecated since 2.1
 	 */
-	[[deprecated]] [[nodiscard]] mongocxx::pool& mongo_pool() noexcept {
+	[[deprecated]] [[nodiscard]] inline mongocxx::pool& mongo_pool() noexcept {
 		return *this->_mongo_pool;
 	}
 
-	[[nodiscard]] const Aisaka::Commands<>& commands() const noexcept {
+	[[nodiscard]] const inline Aisaka::Commands<>& commands() const noexcept {
 		return this->_commands;
 	}
 
-	[[nodiscard]] std::string_view& default_prefix() noexcept {
+	[[nodiscard]] inline std::string_view& default_prefix() noexcept {
 		return this->_default_prefix;
 	}
 
@@ -90,12 +91,15 @@ class Bot {
 	 * @deprecated since 2.1
 	 * @see name()
 	 */
-	[[deprecated("Renamed to Aisaka::Bot::name")]] [[nodiscard]] std::string&
+	[[deprecated("Renamed to Aisaka::Bot::name")]] [
+		[nodiscard]] inline std::string&
 	bot_name() noexcept {
 		return this->_name;
 	}
 
-	[[nodiscard]] int64_t& owner_id() noexcept { return this->_owner_id; }
+	[[nodiscard]] inline int64_t& owner_id() noexcept {
+		return this->_owner_id;
+	}
 
 	virtual void on_message_create(aegis::gateway::events::message_create) {}
 

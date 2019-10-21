@@ -52,8 +52,9 @@ class Commands {
 	const std::optional<Aisaka::Command<T>> find_command(
 		const std::string_view& command_name) const {
 		const auto& command = all.find(std::string{command_name});
-		return command != all.end() ? std::make_optional((*command).second)
-									: std::nullopt;
+		if (command != all.end()) {
+			return (*command).second;
+		}
 	}
 
 	/// Searches for a category.
@@ -64,9 +65,9 @@ class Commands {
 	const std::optional<Aisaka::Category<T>> find_category(
 		const std::string_view& category_name) const {
 		const auto& category = categories.find(std::string{category_name});
-		return category != categories.end()
-				   ? std::make_optional((*category).second)
-				   : std::nullopt;
+		if (category != categories.end()) {
+			return (*categories).second;
+		}
 	}
 };
 }  // namespace Aisaka

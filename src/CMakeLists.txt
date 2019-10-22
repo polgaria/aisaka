@@ -39,7 +39,7 @@ endif()
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result)
-if(result)
+if(CMAKE_BUILD_TYPE STREQUAL Release AND result)
   message(STATUS "IPO/LTO enabled")
   set_target_properties(aisaka PROPERTIES INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()

@@ -38,26 +38,26 @@ class Command {
 	virtual ~Command() = default;
 
 	/// The function each command should adhere to.
-	using Function = std::function<void(
-		aegis::gateway::events::message_create& obj, T& client,
-		const std::deque<std::string_view>& params,
-		const std::string& command_prefix)>;
+	using Function =
+		std::function<void(aegis::gateway::events::message_create& obj,
+						   T& client, const std::deque<std::string>& params,
+						   const std::string& command_prefix)>;
 
-	GETTER_SETTER(name, const std::string_view&)
+	GETTER_SETTER(name, const std::string&)
 	GETTER_SETTER(category, const Aisaka::Category<T>&)
 	GETTER_SETTER(params, const std::deque<Aisaka::Parameter>&)
-	GETTER_SETTER(aliases, const std::unordered_set<std::string_view>&)
+	GETTER_SETTER(aliases, const std::unordered_set<std::string>&)
 	GETTER_SETTER(metadata, const Aisaka::Metadata&)
 	GETTER_SETTER(function, const Function&)
 	GETTER_SETTER(owner_only, bool)
 
    private:
-	std::string_view _name;
+	std::string _name;
 	Aisaka::Category<T> _category{"None"};
 
 	std::deque<Aisaka::Parameter> _params;
-	std::unordered_set<std::string_view> _aliases;
-	Aisaka::Metadata _metadata = Metadata();
+	std::unordered_set<std::string> _aliases;
+	Aisaka::Metadata _metadata;
 
 	Function _function;
 	bool _owner_only = false;

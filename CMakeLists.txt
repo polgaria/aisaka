@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.12...3.15)
 
-set(aisaka_SOVERSION 2)
-set(aisaka_VERSION_MAJOR 2)
-set(aisaka_VERSION_MINOR 1)
-set(aisaka_VERSION_PATCH 2)
+set(aisaka_SOVERSION 3)
+set(aisaka_VERSION_MAJOR 3)
+set(aisaka_VERSION_MINOR 0)
+set(aisaka_VERSION_PATCH 0)
 set(aisaka_VERSION "${aisaka_VERSION_MAJOR}.${aisaka_VERSION_MINOR}.${aisaka_VERSION_PATCH}")
 
 project(
@@ -35,20 +35,43 @@ set(aisaka_CMAKE_PROJECT_CONFIG_FILE  "${aisaka_CMAKE_CONFIG_DIR}/${PROJECT_NAME
 set(aisaka_CMAKE_PROJECT_TARGETS_FILE "${aisaka_CMAKE_CONFIG_DIR}/${PROJECT_NAME}Targets.cmake")
 set(aisaka_INCLUDE_BUILD_DIR		  "${PROJECT_SOURCE_DIR}/include/")
 
-find_package(fifo_map REQUIRED)
-find_package(libmongocxx REQUIRED)
-find_package(libbsoncxx REQUIRED)
+# totally not stolen from whoshuu/cpr
+macro(aisaka_option OPTION_NAME OPTION_TEXT OPTION_DEFAULT)
+    option(${OPTION_NAME} ${OPTION_TEXT} ${OPTION_DEFAULT})
+    if(DEFINED ENV{${OPTION_NAME}})
+        # Allow setting the option through an environment variable
+        set(${OPTION_NAME} $ENV{${OPTION_NAME}})
+    endif()
+    if(${OPTION_NAME})
+        add_definitions(-D${OPTION_NAME})
+    endif()
+    message(STATUS "  ${OPTION_NAME}: ${${OPTION_NAME}}")
+endmacro()
 
-set(JSON_BuildTests
-    OFF
-    CACHE INTERNAL "")
-set(JSON_MultipleHeaders
-    ON
-    CACHE INTERNAL "")
-add_subdirectory(lib/aegis)
+aisaka_option(USE_SYSTEM_AEGIS "Whether to look for an already installed aegis.cpp or use the provided git submodule" OFF)
+aisaka_option(GENERATE_DOCS "Whether to generate documentation or not" ON)
+
+find_package(fifo_map REQUIRED)
+
+if(USE_SYSTEM_AEGIS)
+	find_package(Aegis)
+endif()
+if(NOT USE_SYSTEM_AEGIS OR NOT Aegis_FOUND)
+	message(STATUS "Using git submodule aegis.cpp")
+	set(JSON_BuildTests
+		OFF
+		CACHE INTERNAL "")
+	set(JSON_MultipleHeaders
+		ON
+		CACHE INTERNAL "")
+	add_subdirectory(lib/aegis)
+	set(Aegis_LIBRARIES Aegis::aegis)
+endif()
 
 add_subdirectory(src)
-add_subdirectory(docs)
+if(GENERATE_DOCS)
+	add_subdirectory(docs)
+endif()
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(

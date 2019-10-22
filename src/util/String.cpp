@@ -3,31 +3,37 @@
 #include <iostream>
 #include <sstream>
 
-std::deque<std::string_view> Aisaka::Util::String::split(
-	const std::string_view& source, const char delim) {
-	std::deque<std::string_view> tokens;
+std::deque<std::string> Aisaka::Util::String::split(
+	const std::string_view source, const std::string_view delim) {
+	std::deque<std::string> output;
 
-	std::size_t start = 0;
-	std::size_t end = 0;
+	for (auto first = source.data(), second = source.data(),
+			  last = first + source.length();
+		 second != last && first != last; first = second + 1) {
+		second = std::find_first_of(first, last, std::cbegin(delim),
+									std::cend(delim));
 
-	while ((end = source.find(delim, start)) != std::string_view::npos) {
-		tokens.push_back(source.substr(start, end - start));
-		start = end + 1;
+		if (first != second)
+			output.emplace_back(first, second - first);
 	}
 
-	tokens.push_back(source.substr(start));
-	return tokens;
+	return output;
 }
 
-std::deque<std::string_view> Aisaka::Util::String::split_command(
-	const std::string_view& source, const std::string_view& prefix) {
-	auto arguments = Aisaka::Util::String::split(source, ' ');
-	arguments.push_front(prefix);
+std::deque<std::string> Aisaka::Util::String::split_command(
+	const std::string_view source, const std::string_view prefix) {
+	std::deque<std::string> arguments;
+	arguments.push_back(prefix.data());
+
+	auto _arguments = Aisaka::Util::String::split(source, " ");
+	arguments.insert(arguments.end(),
+					 std::make_move_iterator(_arguments.begin()),
+					 std::make_move_iterator(_arguments.end()));
 
 	return arguments;
 }
 
-std::string Aisaka::Util::String::to_lower(const std::string_view& source) {
+std::string Aisaka::Util::String::to_lower(const std::string_view source) {
 	std::string string_lower{source};
 	std::transform(string_lower.begin(), string_lower.end(),
 				   string_lower.begin(),

@@ -45,7 +45,7 @@ class Command {
 
 	GETTER_SETTER(name, const std::string&)
 	GETTER_SETTER(category, const Aisaka::Category<T>&)
-	GETTER_SETTER(params, const std::deque<Aisaka::Parameter>&)
+	GETTER_SETTER(params, const std::vector<Aisaka::Parameter>&)
 	GETTER_SETTER(aliases, const std::unordered_set<std::string>&)
 	GETTER_SETTER(metadata, const Aisaka::Metadata&)
 	GETTER_SETTER(function, const Function&)
@@ -55,7 +55,7 @@ class Command {
 	std::string _name;
 	Aisaka::Category<T> _category{"None"};
 
-	std::deque<Aisaka::Parameter> _params;
+	std::vector<Aisaka::Parameter> _params;
 	std::unordered_set<std::string> _aliases;
 	Aisaka::Metadata _metadata;
 

@@ -2,7 +2,6 @@ configure_file("${aisaka_SOURCE_DIR}/include/aisaka/Version.hpp.in"
 			   "${aisaka_SOURCE_DIR}/include/aisaka/Version.hpp")
 
 set(HEADER_LIST
-	"${aisaka_SOURCE_DIR}/include/aisaka/Client.hpp"
 	"${aisaka_SOURCE_DIR}/include/aisaka/Bot.hpp"
 	"${aisaka_SOURCE_DIR}/include/aisaka/Version.hpp"
     "${aisaka_SOURCE_DIR}/include/aisaka/command/Command.hpp"
@@ -14,8 +13,7 @@ set(HEADER_LIST
     "${aisaka_SOURCE_DIR}/include/aisaka/util/String.hpp"
 	CACHE INTERNAL "Header Files")
 
-add_library(aisaka Bot.cpp command/Parameter.cpp command/Metadata.cpp
-                   util/String.cpp ${HEADER_LIST})
+add_library(aisaka Bot.cpp util/String.cpp ${HEADER_LIST})
 set_target_properties(aisaka PROPERTIES POSITION_INDEPENDENT_CODE 1)
 set_target_properties(aisaka PROPERTIES SOVERSION ${aisaka_SOVERSION})
 add_library(aisaka::aisaka ALIAS aisaka)
@@ -26,7 +24,7 @@ target_include_directories(
          $<BUILD_INTERFACE:${Aegis_INCLUDE_DIRS}> $<INSTALL_INTERFACE:include>
          ${LIBMONGOCXX_INCLUDE_DIRS})
 
-target_link_libraries(aisaka PUBLIC fifo_map Aegis::aegis
+target_link_libraries(aisaka PUBLIC fifo_map ${Aegis_LIBRARIES}
                                     ${LIBMONGOCXX_LIBRARIES})
 
 target_compile_definitions(aisaka PUBLIC ${LIBMONGOCXX_DEFINITIONS})

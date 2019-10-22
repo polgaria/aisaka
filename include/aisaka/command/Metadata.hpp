@@ -5,11 +5,18 @@
 namespace Aisaka {
 class Metadata {
    public:
-	[[nodiscard]] const std::string& description() const noexcept;
-	Metadata& description(const std::string& description) noexcept;
+	[[nodiscard]] const std::string& description() const noexcept {
+		return this->_description;
+	}
+	Metadata& description(const std::string_view description) noexcept {
+		this->_description = description;
+		return *this;
+	}
 
 	[[nodiscard]] const nlohmann::fifo_map<std::string, std::string>& examples()
-		const noexcept;
+		const noexcept {
+		return this->_examples;
+	}
 	/// Sets the command's examples.
 	/**
 	 * @param examples A nlohmann::fifo_map; the key is the user input, while
@@ -29,8 +36,11 @@ class Metadata {
 	 *		  Adds `test` to the guild prefixes.
 	 * @endrst
 	 */
-	Metadata& examples(
-		const nlohmann::fifo_map<std::string, std::string>&& examples) noexcept;
+	Metadata& examples(const nlohmann::fifo_map<std::string, std::string>&&
+						   examples) noexcept {
+		this->_examples = examples;
+		return *this;
+	}
 
    private:
 	std::string _description;

@@ -19,7 +19,7 @@ class Commands {
 	 * @param log The logger to be used.
 	 */
 	void add_command(Aisaka::Command<T> command, spdlog::logger& log) {
-		const auto& category_name = command.category().get_name().data();
+		const auto& category_name = command.category().name().data();
 		const auto& command_name = command.name().data();
 
 		if (categories.find(category_name) == categories.end()) {
@@ -50,7 +50,7 @@ class Commands {
 	 * @return If no command was found, std::nullopt; if one *was* found, the command itself.
 	 */
 	const std::optional<Aisaka::Command<T>> find_command(
-		const std::string_view& command_name) const {
+		const std::string_view command_name) const {
 		const auto& command = all.find(std::string{command_name});
 		if (command != all.end()) {
 			return (*command).second;
@@ -63,7 +63,7 @@ class Commands {
 	 * @return If no category was found, return std::nullopt; if one *was* found, the category itself.
 	 */
 	const std::optional<Aisaka::Category<T>> find_category(
-		const std::string_view& category_name) const {
+		const std::string_view category_name) const {
 		const auto& category = categories.find(std::string{category_name});
 		if (category != categories.end()) {
 			return (*categories).second;

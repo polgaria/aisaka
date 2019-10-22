@@ -22,13 +22,8 @@ std::deque<std::string> Aisaka::Util::String::split(
 
 std::deque<std::string> Aisaka::Util::String::split_command(
 	const std::string_view source, const std::string_view prefix) {
-	std::deque<std::string> arguments;
-	arguments.push_back(prefix.data());
-
-	auto _arguments = Aisaka::Util::String::split(source, " ");
-	arguments.insert(arguments.end(),
-					 std::make_move_iterator(_arguments.begin()),
-					 std::make_move_iterator(_arguments.end()));
+	auto arguments = Aisaka::Util::String::split(source, " ");
+	arguments.push_front(prefix.data());
 
 	return arguments;
 }

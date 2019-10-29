@@ -24,21 +24,19 @@ class Bot {
 	}
 	virtual ~Bot();
 
-	[[nodiscard]] inline aegis::core& core() noexcept { return this->_core; }
+	[[nodiscard]] aegis::core& core() noexcept { return this->_core; }
 
-	[[nodiscard]] const inline Aisaka::Commands<>& commands() const noexcept {
+	[[nodiscard]] const Aisaka::Commands<>& commands() const noexcept {
 		return this->_commands;
 	}
 
-	[[nodiscard]] inline std::string& default_prefix() noexcept {
+	[[nodiscard]] std::string& default_prefix() noexcept {
 		return this->_default_prefix;
 	}
 
 	[[nodiscard]] std::string& name() noexcept { return this->_name; }
 
-	[[nodiscard]] inline int64_t& owner_id() noexcept {
-		return this->_owner_id;
-	}
+	[[nodiscard]] int64_t& owner_id() noexcept { return this->_owner_id; }
 
 	/// This is where your commands should be handled.
 	virtual void on_message_create(aegis::gateway::events::message_create) {}

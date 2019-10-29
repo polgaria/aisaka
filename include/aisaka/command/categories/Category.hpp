@@ -20,7 +20,7 @@ class Category {
 	/// category's commands to the provided Aisaka::Commands.
 	virtual void init(spdlog::logger&, Aisaka::Commands<T>&) {}
 
-	[[nodiscard]] auto name() const noexcept -> const std::string& {
+	[[nodiscard]] const std::string& name() const noexcept {
 		return this->_name;
 	}
 

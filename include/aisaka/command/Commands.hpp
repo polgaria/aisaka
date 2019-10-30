@@ -55,6 +55,7 @@ class Commands {
 		if (command != all.end()) {
 			return (*command).second;
 		}
+		return std::nullopt;
 	}
 
 	/// Searches for a category.
@@ -68,6 +69,7 @@ class Commands {
 		if (category != categories.end()) {
 			return (*categories).second;
 		}
+		return std::nullopt;
 	}
 };
 }  // namespace Aisaka

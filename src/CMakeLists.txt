@@ -23,9 +23,10 @@ target_include_directories(
   PUBLIC $<BUILD_INTERFACE:${aisaka_SOURCE_DIR}/include>
 		 $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${Aegis_INCLUDE_DIRS}>
+		 $<BUILD_INTERFACE:${robin_hood_INCLUDE_DIRS}>
          ${LIBMONGOCXX_INCLUDE_DIRS})
 
-target_link_libraries(aisaka PUBLIC fifo_map robin_hood
+target_link_libraries(aisaka PUBLIC fifo_map
 									${Aegis_LIBRARIES}
 									${LIBMONGOCXX_LIBRARIES})
 

@@ -22,8 +22,6 @@ class String {
 
 	static std::deque<std::string> split(const std::string_view source,
 										 const std::string_view delim);
-	static std::deque<std::string> split_command(const std::string_view source,
-												 const std::string_view prefix);
 	static std::string to_lower(const std::string_view);
 };
 }  // namespace Aisaka::Util

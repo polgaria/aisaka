@@ -1,5 +1,7 @@
 #pragma once
 
+#include <robin_hood.h>
+
 #include <aisaka/command/Command.hpp>
 #include <aisaka/command/categories/Category.hpp>
 #include <fifo_map.hpp>
@@ -9,9 +11,9 @@ template <class T>
 class Commands {
    public:
 	/// All of the commands that have been added, with the key being the name of each one.
-	nlohmann::fifo_map<std::string, Aisaka::Command<T>> all;
+	robin_hood::unordered_map<std::string, Aisaka::Command<T>> all;
 	/// All of the categories that have been added, with the key being the name of each one.
-	std::unordered_map<std::string, Aisaka::Category<T>> categories;
+	robin_hood::unordered_map<std::string, Aisaka::Category<T>> categories;
 
 	/// Adds a command and its aliases.
 	/**
@@ -50,8 +52,8 @@ class Commands {
 	 * @return If no command was found, std::nullopt; if one *was* found, the command itself.
 	 */
 	const std::optional<Aisaka::Command<T>> find_command(
-		const std::string_view command_name) const {
-		const auto& command = all.find(std::string{command_name});
+		const std::string& command_name) const {
+		const auto& command = all.find(command_name);
 		if (command != all.end()) {
 			return (*command).second;
 		}
@@ -64,8 +66,8 @@ class Commands {
 	 * @return If no category was found, return std::nullopt; if one *was* found, the category itself.
 	 */
 	const std::optional<Aisaka::Category<T>> find_category(
-		const std::string_view category_name) const {
-		const auto& category = categories.find(std::string{category_name});
+		const std::string& category_name) const {
+		const auto& category = categories.find(category_name);
 		if (category != categories.end()) {
 			return (*categories).second;
 		}

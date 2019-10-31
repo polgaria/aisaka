@@ -2,7 +2,6 @@
 
 #include <aegis.hpp>
 #include <aisaka/command/Commands.hpp>
-#include <unordered_map>
 
 namespace Aisaka {
 class Bot {
@@ -14,11 +13,11 @@ class Bot {
 	 * @param owner_id The ID of the bot's owner. If not passed, the owner ID will be set to -1.
 	 */
 	Bot(const std::string_view default_prefix, const std::string_view name,
-		std::optional<const int64_t> owner_id)
+		const int64_t owner_id = -1)
 		: _core(aegis::core(spdlog::level::trace)),
 		  _default_prefix(default_prefix),
 		  _name(name),
-		  _owner_id(owner_id.value_or(-1)) {
+		  _owner_id(owner_id) {
 		this->_core.set_on_message_create(std::bind(
 			&Aisaka::Bot::on_message_create, this, std::placeholders::_1));
 	}
@@ -42,12 +41,11 @@ class Bot {
 	virtual void on_message_create(aegis::gateway::events::message_create) {}
 
    private:
+	Aisaka::Commands<> _commands;
 	aegis::core _core;
 
 	std::string _default_prefix;
 	std::string _name;
 	int64_t _owner_id;
-
-	Aisaka::Commands<> _commands;
 };
 }  // namespace Aisaka

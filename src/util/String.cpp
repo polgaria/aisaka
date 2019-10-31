@@ -13,23 +13,17 @@ std::deque<std::string> Aisaka::Util::String::split(
 		second = std::find_first_of(first, last, std::cbegin(delim),
 									std::cend(delim));
 
-		if (first != second)
+		if (first != second) {
 			output.emplace_back(first, second - first);
+		}
 	}
 
 	return output;
 }
 
-std::deque<std::string> Aisaka::Util::String::split_command(
-	const std::string_view source, const std::string_view prefix) {
-	auto arguments = Aisaka::Util::String::split(source, " ");
-	arguments.push_front(prefix.data());
-
-	return arguments;
-}
-
 std::string Aisaka::Util::String::to_lower(const std::string_view source) {
-	std::string string_lower{source};
+	std::string string_lower(source);
+
 	std::transform(string_lower.begin(), string_lower.end(),
 				   string_lower.begin(),
 				   [](unsigned char c) { return std::tolower(c); });

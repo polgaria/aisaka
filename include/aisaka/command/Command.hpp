@@ -41,7 +41,7 @@ class Command {
 	using Function =
 		std::function<void(aegis::gateway::events::message_create& obj,
 						   T& client, const std::deque<std::string>& params,
-						   const std::string& command_prefix)>;
+						   const std::string_view command_prefix)>;
 
 	GETTER_SETTER(name, const std::string&)
 	GETTER_SETTER(category, const Aisaka::Category<T>&)

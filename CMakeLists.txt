@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.12...3.15)
 
-set(aisaka_SOVERSION 3)
-set(aisaka_VERSION_MAJOR 3)
+set(aisaka_SOVERSION 4)
+set(aisaka_VERSION_MAJOR 4)
 set(aisaka_VERSION_MINOR 0)
-set(aisaka_VERSION_PATCH 2)
-set(aisaka_VERSION "${aisaka_VERSION_MAJOR}.${aisaka_VERSION_MINOR}.${aisaka_VERSION_PATCH}")
+set(aisaka_VERSION_PATCH 0)
+set(aisaka_VERSION ${aisaka_VERSION_MAJOR}.${aisaka_VERSION_MINOR}.${aisaka_VERSION_PATCH})
 
 project(
   aisaka
@@ -52,6 +52,7 @@ aisaka_option(USE_SYSTEM_AEGIS "Whether to look for an already installed aegis.c
 aisaka_option(GENERATE_DOCS "Whether to generate documentation or not" ON)
 
 find_package(fifo_map REQUIRED)
+find_package(robin_hood REQUIRED)
 
 if(USE_SYSTEM_AEGIS)
 	find_package(Aegis)
@@ -86,7 +87,8 @@ install(DIRECTORY ${aisaka_INCLUDE_BUILD_DIR}
 install(
   FILES ${aisaka_CMAKE_PROJECT_CONFIG_FILE} ${aisaka_CMAKE_VERSION_CONFIG_FILE}
         ${CMAKE_CURRENT_LIST_DIR}/cmake/Findfifo_map.cmake
-		${CMAKE_CURRENT_LIST_DIR}/cmake/FindSphinx.cmake		
+		${CMAKE_CURRENT_LIST_DIR}/cmake/FindSphinx.cmake
+		${CMAKE_CURRENT_LIST_DIR}/cmake/Findphmap.cmake				
   DESTINATION ${aisaka_CONFIG_INSTALL_DIR})
 
 export(PACKAGE ${PROJECT_NAME})

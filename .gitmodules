@@ -5,3 +5,6 @@
 	path = lib/aegis
 	url = https://github.com/geniiii/aegis.cpp.git
 	branch = msvc-fix
+[submodule "lib/robin_hood"]
+	path = lib/robin_hood
+	url = https://github.com/martinus/robin-hood-hashing.git

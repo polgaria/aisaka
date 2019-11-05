@@ -3,8 +3,8 @@
 	url = https://github.com/nlohmann/fifo_map.git
 [submodule "lib/aegis"]
 	path = lib/aegis
-	url = https://github.com/geniiii/aegis.cpp.git
-	branch = msvc-fix
+	url = https://github.com/zeroxs/aegis.cpp.git
+	branch = develop
 [submodule "lib/robin_hood"]
 	path = lib/robin_hood
 	url = https://github.com/martinus/robin-hood-hashing.git

@@ -88,7 +88,7 @@ install(
   FILES ${aisaka_CMAKE_PROJECT_CONFIG_FILE} ${aisaka_CMAKE_VERSION_CONFIG_FILE}
         ${CMAKE_CURRENT_LIST_DIR}/cmake/Findfifo_map.cmake
 		${CMAKE_CURRENT_LIST_DIR}/cmake/FindSphinx.cmake
-		${CMAKE_CURRENT_LIST_DIR}/cmake/Findphmap.cmake				
+		${CMAKE_CURRENT_LIST_DIR}/cmake/Findrobin_hood.cmake				
   DESTINATION ${aisaka_CONFIG_INSTALL_DIR})
 
 export(PACKAGE ${PROJECT_NAME})
